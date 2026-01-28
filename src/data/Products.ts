@@ -1,4 +1,4 @@
-interface ProductProps {
+export interface ProductProps {
   id: number;
   name: string;
   category: string;
