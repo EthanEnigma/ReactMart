@@ -20,7 +20,7 @@ export const Products: ProductProps[] = [
     "price": 45.99,
     "stock": 12,
     "images": "url",
-    "description": "Vase artisanal fait main...",
+    "description": "Vase artisanal fait main.",
     "artisan": "Marie Dubois",
     "rating": 4.8,
     "reviews": 23,
