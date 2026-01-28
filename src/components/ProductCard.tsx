@@ -1,7 +1,7 @@
-import { ProductProps } from '../data/Products';
+import type { ProductProps } from '../data/Products';
 
 interface ProductCardProps {
-    Product: Products;
+    product: ProductProps;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -13,7 +13,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <h3 className="product-stock">{product.stock}</h3>
             <h3 className="product-description">{product.description}</h3>
             <h3 className="product-rating">Rating: {product.rating}</h3>
-            <h3 className="product-reviews">{product.review}</h3>
+            <h3 className="product-reviews">{product.reviews}</h3>
             <h3 className="product-tags">{product.tags}</h3>
             <h3 className="product-price">{product.price} €</h3>
             <button onClick={() => alert(`You bought ${product.name}`) } disabled={product.stock <= 0}>
