@@ -16,9 +16,6 @@ function App() {
           </Routes>
         </BrowserRouter>
       </header>
-      <div>
-        <Cart/>
-      </div>
     </div>
 
   )
