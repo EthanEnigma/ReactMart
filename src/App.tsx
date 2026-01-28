@@ -1,11 +1,19 @@
 import './App.css'
-import { BrowserRouter } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Shop from './pages/Shop';
+// import Cart from './pages/Cart';
 
 function App() {
   return (
-    <div>
-      <h1>ReactMart</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Shop />} />
+        <Route path="/shop" element={<Shop />} />
+        {
+          //<Route path="/cart" element={<Cart />} />
+        }
+      </Routes>
+    </BrowserRouter>
   )
 }
 
