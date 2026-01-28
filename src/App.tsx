@@ -17,7 +17,6 @@ function App() {
         </BrowserRouter>
       </header>
     </div>
-
   )
 }
 
