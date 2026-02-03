@@ -13,6 +13,8 @@ interface PanierProps {
 
 export default function Cart({ products, onUpdateQuantity, onRemove }: PanierProps) {
     const total = products.reduce((sum, product) => sum + (product.price * product.stock), 0);
+    const cart_key: string = "cart";
+    localStorage.getItem(cart_key)
     return (
         <div>
             <h1>Shopping Cart</h1>
