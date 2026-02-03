@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import type { ProductProps } from '../data/Products';
+import { useEffect, useState } from "react";
 
 export interface CartItems {
     product: ProductProps;
@@ -13,8 +14,22 @@ interface PanierProps {
 
 export default function Cart({ products, onUpdateQuantity, onRemove }: PanierProps) {
     const total = products.reduce((sum, product) => sum + (product.price * product.stock), 0);
-    const cart_key: string = "cart";
-    localStorage.getItem(cart_key)
+    const [cart, setCart] = useState<ProductProps[]>([]);
+    const [isInit, setIsInit] = useState<boolean>(false);
+    
+    useEffect(() => {
+        const saved = localStorage.getItem('cart');
+        if (saved) {
+            setCart(JSON.parse(saved));
+        }
+        setIsInit(true);
+    }, []);
+
+    useEffect(() => {
+        if (!isInit) return;
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart, isInit]);
+
     return (
         <div>
             <h1>Shopping Cart</h1>
