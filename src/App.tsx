@@ -2,7 +2,7 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router";
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
-import Favorites from './pages/Favorites'
+import Favorites from './pages/Favorites';
 
 function App() {
   return (
