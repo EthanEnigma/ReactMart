@@ -107,7 +107,7 @@ export default function Shop() {
             </header>
 
             {/* CONTENT */}
-            <div id="body" className="flex flex-col overflow-auto p-4">
+            <div id="body" className="flex flex-col overflow-auto p-4 bg-gradient-to-t from-red-50 to-stone-50">
                 <h2 className="text-3xl text-black text-center mt-5">Catégories :</h2>
                 <div className="text-center mb-5">
                     <button onClick={() => setFilter("All")} className={`px-5 py-2 m-1 rounded-md duration-150 ${activeCategory === "All" ? "!bg-[#EED0C6] !border-solid !border-2 !border-[#DABEB6]" : "!bg-[#7A8D9B]"}`}>Tout</button>
