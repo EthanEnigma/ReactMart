@@ -11,6 +11,7 @@ export default function Shop() {
     const [cart, setCart] = useState<CartItems[]>([]);
     const [isInit, setIsInit] = useState<boolean>(false); // init du cart
     const [favorite, setFavorite] = useState<FavoriteItems[]>([]);
+    const [sortOption, setSortOption] = useState<"none" | "price-asc" | "price-desc" | "rate-asc" | "rate-desc">("none");
 
     const cart_key: string = "cart";
     const favorite_key: string = "favorites";
@@ -76,17 +77,30 @@ export default function Shop() {
         })
     }
 
-    function setFilter(category: string) {
-        setActiveCategory(category)
+    const filteredProducts = Products
+        // Par catégorie
+        .filter((product) => {
+            if (activeCategory === "All") return true;
+            return product.category === activeCategory;
+        })
+        // Par prix
+        .sort((a, b) => {
+            switch (sortOption) {
+                case "price-asc":
+                    return a.price - b.price;
+                case "price-desc":
+                    return b.price - a.price;
+                case "rate-asc":
+                    return a.rating - b.rating;
+                case "rate-desc":
+                    return b.rating - a.rating;
+                default:
+                    return 0;
+            }
+        });
 
-        if (category === "All") {
-            setProducts(Products)
-        } else {
-            const filtered = Products.filter(
-                (product) => product.category === category
-            )
-            setProducts(filtered)
-        }
+    function setFilter(category: string) {
+        setActiveCategory(category);
     }
 
     return (
@@ -120,9 +134,19 @@ export default function Shop() {
                     <button onClick={() => setFilter("Accessoires")} className={`px-5 py-2 m-1 rounded-md duration-150 ${activeCategory === "Accessoires" ? "!bg-[#EED0C6] !border-solid !border-2 !border-[#DABEB6]" : "!bg-[#7A8D9B]"}`}>Accessoires</button>
                     <button onClick={() => setFilter("Bijoux")} className={`px-5 py-2 m-1 rounded-md duration-150 ${activeCategory === "Bijoux" ? "!bg-[#EED0C6] !border-solid !border-2 !border-[#DABEB6]" : "!bg-[#7A8D9B]"}`}>Bijoux</button>
                 </div>
+                <div className="flex justify-center mb-6">
+                    <select value={sortOption} onChange={(e) => setSortOption(e.target.value as any)} className="px-4 py-2 rounded-md bg-[#7A8D9B] text-white">
+                        <option value="none">Trier par...</option>
+                        <option value="price-asc">Prix Croissant</option>
+                        <option value="price-desc">Prix Décroissant</option>
+                        <option value="rate-asc">Note Croissante</option>
+                        <option value="rate-desc">Note Décroissante</option>
+                    </select>
+                </div>
+                <hr className="border-solid border-[#7A8D9B] border-1 rounded-md mb-15" />
                 <div id="productsContainer" className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-7xl mx-auto">
                     {/* Product Cards */}
-                    {products.map((product) => (
+                    {filteredProducts.map((product) => (
                         <div key={product.id} className="relative bg-white text-black p-4 my-3 drop-shadow-md/25 rounded-md overflow-hidden hover:scale-102 duration-150">
                             <div className="relative flex justify-center h-50 w-full bg-gradient-to-b from-gray-100 to-[#EED0C6] rounded-md">
                                 <p className="absolute left-0 top-0 text-white opacity-90 bg-[#cccccc] px-3 py-1 m-2 rounded-md">{product.category}</p>
@@ -130,6 +154,7 @@ export default function Shop() {
                                     <a onClick={() => toggleFavorite(product)} className="text-3xl m-2 !text-yellow-500 hover:cursor-pointer">
                                         {isInFavorite(product.id) ? "★" : "☆"}
                                     </a>
+                                    <p className="absolute right-3">{product.rating}</p>
                                 </div>
                                 <p className="absolute right-0 bottom-0 text-white bg-[#DABEB6] px-3 py-1 m-2 rounded-md">{product.price}€</p>
                                 <img src={product.images} className="max-w-full" />
