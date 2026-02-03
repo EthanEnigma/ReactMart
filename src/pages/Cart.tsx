@@ -14,7 +14,7 @@ interface PanierProps {
 
 export default function Cart({ products, onUpdateQuantity, onRemove }: PanierProps) {
     const total = products.reduce((sum, product) => sum + (product.price * product.stock), 0);
-    const [cart, setCart] = useState<ProductProps[]>([]);
+    const [cart, setCart] = useState<CartItems[]>([]);
     const [isInit, setIsInit] = useState<boolean>(false);
     
     useEffect(() => {
