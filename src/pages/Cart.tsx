@@ -1,6 +1,10 @@
 import { Link } from "react-router";
 import type { ProductProps } from '../data/Products';
 
+export interface CartItems {
+    product: ProductProps;
+    quantity: number;
+}
 interface PanierProps {
     products: ProductProps[];
     onUpdateQuantity: (id: number, delta: number) => void;
