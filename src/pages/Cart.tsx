@@ -6,14 +6,7 @@ export interface CartItems {
     product: ProductProps;
     quantity: number;
 }
-interface PanierProps {
-    products: ProductProps[];
-    onUpdateQuantity: (id: number, delta: number) => void;
-    onRemove: (id: number) => void;
-}
-
-export default function Cart({ products, onUpdateQuantity, onRemove }: PanierProps) {
-    const total = products.reduce((sum, product) => sum + (product.price * product.stock), 0);
+export default function Cart() {
     const [cart, setCart] = useState<CartItems[]>([]);
     const [isInit, setIsInit] = useState<boolean>(false);
     
@@ -30,24 +23,36 @@ export default function Cart({ products, onUpdateQuantity, onRemove }: PanierPro
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart, isInit]);
 
+
+    const handleUpdateQuantity = (id: number, delta: number) => {
+        setCart(prev => prev.map(item => item.product.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) }: item)
+        );
+    };
+
+    const handleRemove = (id: number) => {
+        setCart(prev => prev.filter(item => item.product.id !== id));
+    };
+
+    const total = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+
     return (
         <div>
             <h1>Shopping Cart</h1>
             <Link to="/shop">Page Shop</Link>
             <div className="cart">
-                {products.length === 0 ? (
+                {cart.length === 0 ? (
                     <p>Your cart is empty.</p>
                 ) : (
                     <div>
-                        {products.map(product => (
+                        {cart.map(({product, quantity }) => (
                             <div key={product.id} className="cart-item">
                                 <img src={product.images} alt={product.name} className="cart-product-image" />
                                 <p>{product.name}</p>
                                 <p>Price: {product.price} €</p>
-                                <p>Quantity: {product.stock}</p>
-                                <button onClick={() => onUpdateQuantity(product.id, 1)} disabled={product.stock <= 0}>+</button>
-                                <button onClick={() => onUpdateQuantity(product.id, -1)} disabled={product.stock <= 1}>-</button>
-                                <button onClick={() => onRemove(product.id)}>Remove</button>
+                                <p>Quantity: {quantity}</p>
+                                <button onClick={() => handleUpdateQuantity(product.id, 1)} disabled={product.stock <= 0}>+</button>
+                                <button onClick={() => handleUpdateQuantity(product.id, -1)} disabled={product.stock <= 1}>-</button>
+                                <button onClick={() => handleRemove(product.id)}>Remove</button>
                             </div>
                         ))}
                         <div className="cart-total">
