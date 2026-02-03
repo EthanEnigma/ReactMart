@@ -3,9 +3,7 @@ import { Link } from "react-router-dom"
 import Products from "../data/Products";
 import type { ProductProps } from "../data/Products";
 import type { CartItems } from "./Cart";
-// import type { FavoriteItems } from "./Favorites";
-
-type FavoriteItems = ProductProps;
+import type { FavoriteItems } from "./Favorites";
 
 export default function Shop() {
     const [products, setProducts] = useState<ProductProps[]>([]);
