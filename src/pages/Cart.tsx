@@ -9,7 +9,8 @@ export interface CartItems {
 export default function Cart() {
     const [cart, setCart] = useState<CartItems[]>([]);
     const [isInit, setIsInit] = useState<boolean>(false);
-    
+
+    // Charger le panier
     useEffect(() => {
         const saved = localStorage.getItem('cart');
         if (saved) {
@@ -18,48 +19,112 @@ export default function Cart() {
         setIsInit(true);
     }, []);
 
+    // Sync le panier vers le localstorage
     useEffect(() => {
         if (!isInit) return;
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart, isInit]);
 
-
+    // Met à jour la quantité d'un produit dans le panier
     const handleUpdateQuantity = (id: number, delta: number) => {
         setCart(prev => prev.map(item => item.product.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) }: item)
         );
     };
 
+    // Supprime un produit du panier
     const handleRemove = (id: number) => {
         setCart(prev => prev.filter(item => item.product.id !== id));
     };
 
+    // Calcul du total du panier
     const total = cart.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
 
     return (
-        <div>
-            <h1>Shopping Cart</h1>
-            <Link to="/shop">Page Shop</Link>
-            <div className="cart">
+        <div className="min-h-screen w-screen bg-gray-300 overflow-y-hidden">
+            <head>
+                <title>ReactMart • Cart</title> 
+            </head>
+            {/* HEADER */}
+            <header className="z-1 relative p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 drop-shadow-lg/30">
+                <div className="absolute inset-0 bg-[url(/src/data/images/LeafBackground.jpg)] bg-center grayscale"></div>
+                <div className="absolute inset-0 bg-[#DABEB6]/70"></div>
+                <h1 className="z-2 text-white font-bold text-xl text-center mx-5 sm:text-left text-shadow-lg">ReactMart - Cart</h1>
+                <nav className="z-2 flex justify-center sm:justify-end gap-4 mx-5">
+                    <Link to="/" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Shop</p></Link>
+                    <Link to="/cart" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Cart</p></Link>
+                </nav>
+            </header>
+
+            {/* CONTENT */}
+            <div className="flex flex-col overflow-auto p-4 bg-gradient-to-t from-red-50 to-stone-50 min-h-[60vh]">
+                <h2 className="text-3xl text-black text-center mt-5">Votre Panier</h2>
                 {cart.length === 0 ? (
-                    <p>Your cart is empty.</p>
-                ) : (
-                    <div>
-                        {cart.map(({product, quantity }) => (
-                            <div key={product.id} className="cart-item">
-                                <img src={product.images} alt={product.name} className="cart-product-image" />
-                                <p>{product.name}</p>
-                                <p>Price: {product.price} €</p>
-                                <p>Quantity: {quantity}</p>
-                                <button onClick={() => handleUpdateQuantity(product.id, 1)} disabled={product.stock <= 0}>+</button>
-                                <button onClick={() => handleUpdateQuantity(product.id, -1)} disabled={product.stock <= 1}>-</button>
-                                <button onClick={() => handleRemove(product.id)}>Remove</button>
-                            </div>
-                        ))}
-                        <div className="cart-total">
-                            <h2>Total: {total.toFixed(2)} €</h2>
+                    <div className="max-w-3xl mx-auto w-full mt-8 bg-white drop-shadow-md/25 rounded-md p-6 text-center">
+                        <p className="text-lg text-black">Votre panier est vide.</p>
+                        <p className="text-sm text-[#B2B9BF] mt-2">Ajoutez des articles depuis la boutique.</p>
+                        <div className="mt-5 flex justify-center">
+                            <Link to="/" className="!text-white bg-[#7A8D9B] px-5 py-2 rounded-full hover:bg-green-300 hover:cursor-pointer duration-150">Retour au shop</Link>
                         </div>
                     </div>
+                ) : (
+                    <>
+                        {/* Total */}
+                        <div className="max-w-7xl mx-auto w-full mt-6 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+                            <div className="bg-white drop-shadow-md/25 rounded-md px-4 py-3 w-full sm:w-auto">
+                                <p className="text-black text-xl">
+                                    Total : <span className="font-bold">{total.toFixed(2)} €</span>
+                                </p>
+                            </div>
+                            <Link to="/" className="!text-white bg-[#7A8D9B] px-5 py-2 rounded-full hover:bg-green-300 hover:cursor-pointer duration-150">Continuer vos achats</Link>
+                        </div>
+
+                        {/* Cart Items */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-7xl mx-auto w-full">
+                            {cart.map(({ product, quantity }) => (
+                                <div key={product.id} className="relative bg-white text-black p-4 drop-shadow-md/25 rounded-md overflow-hidden hover:scale-102 duration-150">
+                                    <div className="relative flex justify-center h-50 w-full bg-gradient-to-b from-gray-100 to-[#EED0C6] rounded-md">
+                                        <p className="absolute left-0 top-0 text-white opacity-90 bg-[#cccccc] px-3 py-1 m-2 rounded-md">{product.category}</p>
+                                        <p className="absolute right-0 bottom-0 text-white bg-[#DABEB6] px-3 py-1 m-2 rounded-md">{product.price}€</p>
+                                        <img src={product.images} alt={product.name} className="max-w-full" />
+                                    </div>
+                                    <hr className="border-solid border-black border-1 rounded-md my-3" />
+                                    <div className="h-fit w-full">
+                                        <h3 className="text-xl text-center mb-2">{product.name}</h3>
+                                        <p className="text-sm text-[#B2B9BF] mb-4">{product.description}</p>
+                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-black">Quantité :</span>
+                                                <div className="flex items-center gap-2">
+                                                    <button onClick={() => handleUpdateQuantity(product.id, -1)} disabled={quantity <= 1}
+                                                        className={`px-4 py-2 rounded-md duration-150 ${quantity > 1 ? "!bg-[#EED0C6] hover:!bg-[#DABEB6]" : "!bg-gray-300 cursor-not-allowed"} !text-white`}> 
+                                                        -
+                                                    </button>
+                                                    <span className="min-w-8 text-center font-bold">{quantity}</span>
+                                                    <button onClick={() => handleUpdateQuantity(product.id, 1)} disabled={quantity >= product.stock}
+                                                        className={`px-4 py-2 rounded-md duration-150 ${quantity < product.stock ? "!bg-[#EED0C6] hover:!bg-[#DABEB6]" : "!bg-gray-300 cursor-not-allowed"} !text-white`}>
+                                                        +
+                                                    </button>
+                                                </div>
+                                                <span className="text-xs text-[#B2B9BF]">(stock: {product.stock})</span>
+                                            </div>
+                                            <a onClick={() => handleRemove(product.id)}
+                                                className="!text-white bg-red-500 px-5 py-2 rounded-full hover:opacity-60 hover:cursor-pointer duration-150">
+                                                Retirer
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </>
                 )}
+            </div>
+
+            {/* FOOTER */}
+            <div className="relative flex w-full h-50 items-center justify-center">
+                <div className="absolute inset-0 bg-[url(/src/data/images/LeafBackground.jpg)] bg-center grayscale"></div>
+                <div className="absolute inset-0 bg-[#DABEB6]/70"></div>
+                <h2 className="relative text-4xl text-center text-white drop-shadow-md/25">© ReactMart • Tout droit réservé</h2>
             </div>
         </div>
     );
