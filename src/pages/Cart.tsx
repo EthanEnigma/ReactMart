@@ -9,6 +9,16 @@ export interface CartItems {
 export default function Cart() {
     const [cart, setCart] = useState<CartItems[]>([]);
     const [isInit, setIsInit] = useState<boolean>(false);
+    const [ordered, setOrdered] = useState<boolean>(false);
+    const [form, setForm] = useState({ nom: '', prenom: '', email: '', adresse: '', ville: '', pays: '' });
+
+    // Gérer la validation de la commande
+    const handleOrder = (e: React.FormEvent) => {
+        e.preventDefault();
+        setOrdered(true);
+        setCart([]);
+        localStorage.removeItem('cart');
+    };
 
     // Charger le panier
     useEffect(() => {
@@ -44,6 +54,7 @@ export default function Cart() {
             <head>
                 <title>ReactMart • Cart</title> 
             </head>
+            
             {/* HEADER */}
             <header className="z-1 relative p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 drop-shadow-lg/30">
                 <div className="absolute inset-0 bg-[url(/src/data/images/LeafBackground.jpg)] bg-center grayscale"></div>
@@ -58,7 +69,20 @@ export default function Cart() {
             {/* CONTENT */}
             <div className="flex flex-col overflow-auto p-4 bg-gradient-to-t from-red-50 to-stone-50 min-h-[60vh]">
                 <h2 className="text-3xl text-black text-center mt-5">Votre Panier</h2>
-                {cart.length === 0 ? (
+
+                {ordered ? (
+                    <div className="max-w-3xl mx-auto w-full mt-8 bg-white drop-shadow-md/25 rounded-md p-6 text-center">
+                        <p className="text-5xl mb-4">✅</p>
+                        <p className="text-2xl text-black font-bold">Commande confirmée !</p>
+                        <p className="text-[#B2B9BF] mt-2">Merci {form.prenom} {form.nom} pour votre achat.</p>
+                        <p className="text-[#B2B9BF]">Un email de confirmation a été envoyé à {form.email}</p>
+                        <div className="mt-5 flex justify-center">
+                            <Link to="/" className="!text-white bg-[#7A8D9B] px-5 py-2 rounded-full hover:bg-green-300 hover:cursor-pointer duration-150">Retour au shop</Link>
+                        </div>
+                    </div>
+                ) : 
+                
+                    cart.length === 0 ? (
                     <div className="max-w-3xl mx-auto w-full mt-8 bg-white drop-shadow-md/25 rounded-md p-6 text-center">
                         <p className="text-lg text-black">Votre panier est vide.</p>
                         <p className="text-sm text-[#B2B9BF] mt-2">Ajoutez des articles depuis la boutique.</p>
@@ -116,6 +140,30 @@ export default function Cart() {
                                 </div>
                             ))}
                         </div>
+
+                        {/* Formulaire de commande */}
+                        <form onSubmit={handleOrder} className="max-w-xl mx-auto w-full mt-6 bg-white drop-shadow-md/25 rounded-md p-6">
+                            <h3 className="text-xl text-black text-center mb-4">Formulaire de commande</h3>
+                            <div className="grid grid-cols-2 gap-3">
+                                <input type="text" value={form.prenom} onChange={(e) => setForm({...form, prenom: e.target.value})} required
+                                    placeholder="Prénom" className="px-4 py-2 border border-gray-300 rounded-md text-black" />
+                                <input type="text" value={form.nom} onChange={(e) => setForm({...form, nom: e.target.value})} required
+                                    placeholder="Nom" className="px-4 py-2 border border-gray-300 rounded-md text-black" />
+                            </div>
+                            <input type="email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} required
+                                placeholder="Email" className="w-full px-4 py-2 border border-gray-300 rounded-md text-black mt-3" />
+                            <input type="text" value={form.adresse} onChange={(e) => setForm({...form, adresse: e.target.value})} required
+                                placeholder="Adresse" className="w-full px-4 py-2 border border-gray-300 rounded-md text-black mt-3" />
+                            <div className="grid grid-cols-2 gap-3 mt-3">
+                                <input type="text" value={form.ville} onChange={(e) => setForm({...form, ville: e.target.value})} required
+                                    placeholder="Ville" className="px-4 py-2 border border-gray-300 rounded-md text-black" />
+                                <input type="text" value={form.pays} onChange={(e) => setForm({...form, pays: e.target.value})} required
+                                    placeholder="Pays" className="px-4 py-2 border border-gray-300 rounded-md text-black" />
+                            </div>
+                            <button type="submit" className="!text-white bg-green-500 px-8 py-3 rounded-full hover:bg-green-600 hover:cursor-pointer duration-150 font-bold w-full mt-4">
+                                Commander ({total.toFixed(2)} €)
+                            </button>
+                        </form>
                     </>
                 )}
             </div>
