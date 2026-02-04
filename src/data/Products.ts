@@ -10,6 +10,8 @@ export interface ProductProps {
   rating: number;
   reviews: number;
   tags: string[];
+  onUpdateQuantity?: (id: number, delta: number) => void;
+  onRemove?: (id: number) => void;
 }
 
 export const Products: ProductProps[] = [
