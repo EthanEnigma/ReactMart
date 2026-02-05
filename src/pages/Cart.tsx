@@ -6,6 +6,7 @@ export interface CartItems {
     product: ProductProps;
     quantity: number;
 }
+
 export default function Cart() {
     const [cart, setCart] = useState<CartItems[]>([]);
     const [isInit, setIsInit] = useState<boolean>(false);
@@ -52,17 +53,18 @@ export default function Cart() {
     return (
         <div className="min-h-screen w-screen bg-gray-300 overflow-y-hidden">
             <head>
-                <title>ReactMart • Cart</title> 
+                <title>ReactMart • Panier</title> 
             </head>
             
             {/* HEADER */}
             <header className="z-1 relative p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 drop-shadow-lg/30">
                 <div className="absolute inset-0 bg-[url(/src/data/images/LeafBackground.jpg)] bg-center grayscale"></div>
                 <div className="absolute inset-0 bg-[#DABEB6]/70"></div>
-                <h1 className="z-2 text-white font-bold text-xl text-center mx-5 sm:text-left text-shadow-lg">ReactMart - Cart</h1>
+                <h1 className="z-2 text-white font-bold text-xl text-center mx-5 sm:text-left text-shadow-lg">ReactMart - Panier</h1>
                 <nav className="z-2 flex justify-center sm:justify-end gap-4 mx-5">
-                    <Link to="/" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Shop</p></Link>
-                    <Link to="/cart" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Cart</p></Link>
+                    <Link to="/" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Boutique</p></Link>
+                    <Link to="/cart" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Favoris</p></Link>                    
+                    <Link to="/cart" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Panier</p></Link>
                 </nav>
             </header>
 
@@ -109,7 +111,9 @@ export default function Cart() {
                                     <div className="relative flex justify-center h-50 w-full bg-gradient-to-b from-gray-100 to-[#EED0C6] rounded-md">
                                         <p className="absolute left-0 top-0 text-white opacity-90 bg-[#cccccc] px-3 py-1 m-2 rounded-md">{product.category}</p>
                                         <p className="absolute right-0 bottom-0 text-white bg-[#DABEB6] px-3 py-1 m-2 rounded-md">{product.price}€</p>
-                                        <img src={product.images} alt={product.name} className="max-w-full" />
+                                        <Link to={`/product/${product.id}`} className="block h-full w-full">
+                                            <img src={product.images} alt={product.name} className="w-full h-full object-contain" />
+                                        </Link>
                                     </div>
                                     <hr className="border-solid border-black border-1 rounded-md my-3" />
                                     <div className="h-fit w-full">
