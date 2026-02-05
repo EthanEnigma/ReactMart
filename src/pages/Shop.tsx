@@ -120,7 +120,7 @@ export default function Shop() {
                 <h1 className="z-2 text-white font-bold text-xl text-center mx-5 sm:text-left text-shadow-lg">ReactMart - Boutique</h1>
                 <nav className="z-2 flex justify-center sm:justify-end gap-4 mx-5">
                     <Link to="/" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Boutique</p></Link>
-                    <Link to="/cart" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Favoris</p></Link>
+                    <Link to="/favorites" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Favoris</p></Link>
                     <Link to="/cart" className="bg-[#EED0C6] px-3 py-2 rounded-md hover:scale-110 duration-100"><p className="text-white">Panier</p></Link>
                 </nav>
             </header>
