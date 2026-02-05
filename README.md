@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# ReactMart - Boutique en ligne artisanale
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Une application e-commerce React pour vendre des produits artisanaux.
 
-Currently, two official plugins are available:
+## Technologies utilisées
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React** 
+- **TypeScript** 
+- **Vite** 
+- **Tailwind CSS** 
+- **React Router** 
 
-## React Compiler
+## Fonctionnalités
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Boutique** : Parcourir les produits artisanaux
+- **Filtrage** : Par catégorie (Décoration, Cuisine, Mode, Bijoux, Art, etc.)
+- **Tri** : Par prix ou par note (croissant/décroissant)
+- **Panier** : Ajouter, modifier les quantités, supprimer des articles
+- **Favoris** : Sauvegarder ses produits préférés
+- **Page produit** : Voir les détails d'un article
+- **Commande** : Formulaire de validation avec confirmation
+- **Persistance** : Les données du panier et favoris sont sauvegardées dans le localStorage
 
-## Expanding the ESLint configuration
+## Démo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+L'application est déployée sur Vercel : [Accéder à ReactMart](https://react-mart.vercel.app)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Installation locale
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Cloner le projet
+git clone https://github.com/votre-repo/reactmart.git
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Installer les dépendances
+npm install
+
+# Lancer en mode développement
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Structure du projet
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── App.tsx          # Routes de l'application
+├── data/
+│   ├── Products.ts  # Liste des produits
+│   └── images/      # Images des produits
+└── pages/
+    ├── Shop.tsx        # Page boutique
+    ├── Cart.tsx        # Page panier
+    ├── Favorites.tsx   # Page favoris
+    └── ProductPage.tsx # Page détail produit
 ```
