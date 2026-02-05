@@ -131,7 +131,7 @@ export default function Shop() {
                                         {isInFavorite(product.id) ? "★" : "☆"}
                                     </a>
                                 </div>
-                                <p className="absolute right-0 bottom-0 text-white bg-[#DABEB6] px-3 py-1 m-2 rounded-md">{product.price}€</p>
+                                <p className="absolute right-0 bottom-0 text-white bg-[#DABEB6] px-3 py-1 m-2 rounded-md">{product.price.toFixed(2)}€</p>
                                 <img src={product.images} className="max-w-full" />
                             </div>
                             <hr className="border-solid border-black border-1 rounded-md my-3" />
