@@ -161,8 +161,14 @@ export default function Shop() {
                                     </a>
                                     <p className="absolute right-3">{product.rating}</p>
                                 </div>
-                                <p className="absolute right-0 bottom-0 text-white bg-[#DABEB6] px-3 py-1 m-2 rounded-md">{product.price.toFixed(2)}€</p>
-                                <img src={product.images} className="max-w-full" />
+                                <p className="absolute right-0 bottom-0 text-white bg-[#DABEB6] px-3 py-1 m-2 rounded-md">{product.price}€</p>
+                                <Link to={`/product/${product.id}`} className="block w-full h-full">
+                                    <img
+                                        src={product.images}
+                                        alt={product.name}
+                                        className="w-full h-full object-contain"
+                                    />
+                                </Link>
                             </div>
                             <hr className="border-solid border-black border-1 rounded-md my-3" />
                             {/* Card Content */}
