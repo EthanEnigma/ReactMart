@@ -7,18 +7,12 @@ import type { FavoriteItems } from "./Favorites";
 
 export default function ProductPage() {
 
-    const [products, setProducts] = useState<ProductProps[]>([]);
     const [cart, setCart] = useState<CartItems[]>([]);
     const [isInit, setIsInit] = useState<boolean>(false); // init du cart
     const [favorite, setFavorite] = useState<FavoriteItems[]>([]);
 
     const cart_key: string = "cart";
     const favorite_key: string = "favorites";
-
-    // Charger produits
-    useEffect(() => {
-        setProducts(Products)
-    }, [])
 
     // Charger panier
     useEffect(() => {
@@ -131,8 +125,8 @@ export default function ProductPage() {
                             <p className="absolute right-0 bottom-0 text-white bg-[#DABEB6] px-3 py-1 m-2 rounded-md">
                                 {product.price.toFixed(2)} €
                             </p>
-
                             <img
+
                                 src={product.images}
                                 alt={product.name}
                                 className="max-w-full max-h-full object-contain"
