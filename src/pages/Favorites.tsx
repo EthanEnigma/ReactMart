@@ -44,7 +44,7 @@ export default function Favorites() {
     }
 
     return (
-        <div className="min-h-screen w-screen bg-gray-300" id="document">
+        <div className="min-h-screen w-screen bg-gradient-to-t from-red-50 to-stone-50">
             <head>
                 <title>ReactMart • Favoris</title>
             </head>
@@ -64,10 +64,10 @@ export default function Favorites() {
 
             {/* CONTENT */}
             <div className="p-6">
-                <h2 className="text-3xl text-center mb-6">Vos Favoris ⭐</h2>
+                <h2 className="text-3xl text-center mb-6 text-black">Vos Favoris ⭐</h2>
 
                 {favorites.length === 0 ? (
-                    <p className="text-center text-lg text-gray-600">
+                    <p className="text-center text-lg text-gray-600 text-black">
                         Aucun article en favori pour le moment.
                     </p>
                 ) : (
@@ -117,7 +117,7 @@ export default function Favorites() {
             </div>
 
             {/* FOOTER */}
-            <div className="relative flex w-full h-50 items-center justify-center mt-10">
+            <div className="relative flex w-full h-50 items-center justify-center mt-auto">
                 <div className="absolute inset-0 bg-[url(/src/data/images/LeafBackground.jpg)] bg-center grayscale"></div>
                 <div className="absolute inset-0 bg-[#DABEB6]/70"></div>
                 <h2 className="relative text-4xl text-center text-white drop-shadow-md/25">
