@@ -23,7 +23,7 @@ Une application e-commerce React pour vendre des produits artisanaux.
 
 ## Démo
 
-L'application est déployée sur Vercel : [Accéder à ReactMart](https://react-mart.vercel.app)
+L'application est déployée sur Vercel : [Accéder à ReactMart](https://react-mart-omega.vercel.app/)
 
 ## Installation locale
 
