@@ -8,18 +8,13 @@ import type { FavoriteItems } from "./Favorites";
 export default function Shop() {
     const [activeCategory, setActiveCategory] = useState<string>("All");
     const [sortOption, setSortOption] = useState<"none" | "price-asc" | "price-desc" | "rate-asc" | "rate-desc">("none");
-    const [products, setProducts] = useState<ProductProps[]>([]);
     const [cart, setCart] = useState<CartItems[]>([]);
     const [isInit, setIsInit] = useState<boolean>(false); // init du cart
     const [favorite, setFavorite] = useState<FavoriteItems[]>([]);
+    const [isFavInit, setIsFavInit] = useState<boolean>(false);
 
     const cart_key: string = "cart";
     const favorite_key: string = "favorites";
-
-    // Charger produits
-    useEffect(() => {
-        setProducts(Products)
-    }, [])
 
     // Charger panier
     useEffect(() => {
@@ -36,18 +31,27 @@ export default function Shop() {
         if (savedFavorites) {
             setFavorite(JSON.parse(savedFavorites));
         }
+        setIsFavInit(true);
     }, []);
 
     // Sync le panier vers localstorage
     useEffect(() => {
-        if (!isInit) return;
-        localStorage.setItem(cart_key, JSON.stringify(cart));
+        if (!isInit) {
+            return;
+        } else {
+            localStorage.setItem(cart_key, JSON.stringify(cart));
+        }
     }, [cart, isInit]);
 
     // Sync favoris vers localstorage
     useEffect(() => {
-        localStorage.setItem(favorite_key, JSON.stringify(favorite));
-    }, [favorite]);
+        if (!isFavInit) {
+            return;
+        }
+        else {
+            localStorage.setItem(favorite_key, JSON.stringify(favorite));
+        }
+    }, [favorite, isFavInit]);
 
 
     function addToCart(product: ProductProps) {
