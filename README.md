@@ -41,14 +41,15 @@ npm run dev
 ## Structure du projet
 
 ```
-src/
-├── App.tsx          # Routes de l'application
-├── data/
-│   ├── Products.ts  # Liste des produits
-│   └── images/      # Images des produits
-└── pages/
-    ├── Shop.tsx        # Page boutique
-    ├── Cart.tsx        # Page panier
-    ├── Favorites.tsx   # Page favoris
-    └── ProductPage.tsx # Page détail produit
+├── src/
+│   ├── App.tsx          # Routes de l'application
+│   ├── data/
+│   │   └── Products.ts  # Liste des produits
+│   └── pages/
+│       ├── Shop.tsx        # Page boutique
+│       ├── Cart.tsx        # Page panier
+│       ├── Favorites.tsx   # Page favoris
+│       └── ProductPage.tsx # Page détail produit
+└── public/
+    └── images/          # Images des produits
 ```
