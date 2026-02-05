@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { ProductProps } from "../data/Products";
+import type { CartItems } from "./Cart";
 
 export type FavoriteItems = ProductProps;
 
@@ -9,7 +10,7 @@ export default function Favorites() {
     const cart_key = "cart";
 
     const [favorites, setFavorites] = useState<FavoriteItems[]>([]);
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState<CartItems[]>([]);
 
     // Charger les favoris
     useEffect(() => {
