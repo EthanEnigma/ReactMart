@@ -52,7 +52,7 @@ export default function Favorites() {
 
             {/* HEADER */}
             <header className="z-1 relative p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 drop-shadow-lg/30">
-                <div className="absolute inset-0 bg-[url(/src/data/images/LeafBackground.jpg)] bg-center grayscale"></div>
+                <div className="absolute inset-0 bg-[url(/images/LeafBackground.jpg)] bg-center grayscale"></div>
                 <div className="absolute inset-0 bg-[#DABEB6]/70"></div>
                 <h1 className="z-2 text-white font-bold text-xl mx-5 text-shadow-lg">ReactMart - Favoris</h1>
 
@@ -119,7 +119,7 @@ export default function Favorites() {
 
             {/* FOOTER */}
             <div className="relative flex w-full h-50 items-center justify-center mt-auto">
-                <div className="absolute inset-0 bg-[url(/src/data/images/LeafBackground.jpg)] bg-center grayscale"></div>
+                <div className="absolute inset-0 bg-[url(/images/LeafBackground.jpg)] bg-center grayscale"></div>
                 <div className="absolute inset-0 bg-[#DABEB6]/70"></div>
                 <h2 className="relative text-4xl text-center text-white drop-shadow-md/25">
                     © ReactMart • Tout droit réservé
